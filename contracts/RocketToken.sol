@@ -11,7 +11,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 
 contract RocketToken is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Ownable, ERC721Burnable {
     using Counters for Counters.Counter;
-
+    uint cost = 0.0001 ether; 
     Counters.Counter private _tokenIdCounter;
 
     constructor() ERC721("RocketToken", "Rocket") {}
@@ -24,7 +24,8 @@ contract RocketToken is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Ow
         _unpause();
     }
 
-    function safeMint(address to, string memory uri) public onlyOwner {
+    function safeMint(address to, string memory uri) public payable onlyOwner {
+        require(msg.value >= cost, "Not enough ETH was sent");
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
         _safeMint(to, tokenId);
