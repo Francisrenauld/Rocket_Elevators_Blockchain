@@ -24,7 +24,7 @@ contract RocketToken is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Ow
         _unpause();
     }
 
-    function safeMint(address to, string memory uri) public payable onlyOwner {
+    function safeMint(address to, string memory uri) public payable{
         require(msg.value >= cost, "Not enough ETH was sent");
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
@@ -62,5 +62,14 @@ contract RocketToken is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Ow
         returns (bool)
     {
         return super.supportsInterface(interfaceId);
+    }
+
+    function getBalance() public view returns(uint) {
+        return address(this).balance;
+    }
+
+        function withdrawMoney() public onlyOwner{
+        address payable to = payable(msg.sender);
+        to.transfer(getBalance());
     }
 }
