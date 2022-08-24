@@ -13,13 +13,13 @@ const RocketToken = contract(RocketTokenArtifact);
 RocketToken.setProvider(provider);
 
 // Note our MetaCoin contract exists at a specific address.
-const contractAddress = "0x937aD93C31818a23AEC7B787abb73c0d623a421d";
+const contractAddress = "0xB4a476Fa274b16B962f5576e640CcecAB0b88148";
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-app.get('/getTokenName', async (req, res) => {
+app.get('/getContractName', async (req, res) => {
   const instance = await RocketToken.at(contractAddress);
   let result = await instance.name();
   res.send(result)
@@ -28,5 +28,3 @@ app.get('/getTokenName', async (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
-
-
