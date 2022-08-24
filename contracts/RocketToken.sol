@@ -54,13 +54,16 @@ contract RocketToken is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Ow
         _setTokenURI(tokenId, uri);
     }
 
-        function freeNFT(address to, string memory uri) public {
-
-        uint256 tokenId = _tokenIdCounter.current();
-        _tokenIdCounter.increment();
-        _safeMint(to, tokenId);
-        _setTokenURI(tokenId, uri);
-        
+        function CheckAddress(address to) view public returns(string memory) {
+            
+          // bytes memory tempAddress = bytes(to);
+            //require(freeNFTList[to] == true, "This address is not in the get free NFT list or no valid address is provided");
+            if(freeNFTList[to] == true){
+                return "This address can still get a free NFT!";
+            }else{
+                return "This address allready had a free NFT or no valid address is provided";
+            }
+            
     }
 
     function _beforeTokenTransfer(address from, address to, uint256 tokenId)
