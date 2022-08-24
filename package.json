@@ -1,7 +1,7 @@
 {
   "name": "rocket_elevators_blockchain",
   "version": "1.0.0",
-  "description": "Rocket Elevator block chain solution",
+  "description": "Rocket Elevators Blockchain Solution",
   "main": "truffle-config.js",
   "directories": {
     "test": "test"
@@ -11,16 +11,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Francisrenauld/Rocket_Elevators_Blockchain.git"
+    "url": "git+https://github.com/StevenFV/Rocket_Elevators_Blockchain.git"
   },
-  "author": "Francis renauld",
+  "author": "StevenFrancoeurVeillet",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Francisrenauld/Rocket_Elevators_Blockchain/issues"
+    "url": "https://github.com/StevenFV/Rocket_Elevators_Blockchain/issues"
   },
-  "homepage": "https://github.com/Francisrenauld/Rocket_Elevators_Blockchain#readme",
+  "homepage": "https://github.com/StevenFV/Rocket_Elevators_Blockchain#readme",
   "dependencies": {
     "@openzeppelin/contracts": "^4.7.3",
-    "express": "^4.18.1"
+    "@truffle/contract": "^4.5.22",
+    "express": "^4.18.1",
+    "web3": "^1.7.5"
   }
 }

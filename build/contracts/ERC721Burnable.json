@@ -354,18 +354,18 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\n// OpenZeppelin Contracts (last updated v4.7.0) (token/ERC721/extensions/ERC721Burnable.sol)\n\npragma solidity ^0.8.0;\n\nimport \"../ERC721.sol\";\nimport \"../../../utils/Context.sol\";\n\n/**\n * @title ERC721 Burnable Token\n * @dev ERC721 Token that can be burned (destroyed).\n */\nabstract contract ERC721Burnable is Context, ERC721 {\n    /**\n     * @dev Burns `tokenId`. See {ERC721-_burn}.\n     *\n     * Requirements:\n     *\n     * - The caller must own `tokenId` or be an approved operator.\n     */\n    function burn(uint256 tokenId) public virtual {\n        //solhint-disable-next-line max-line-length\n        require(_isApprovedOrOwner(_msgSender(), tokenId), \"ERC721: caller is not token owner nor approved\");\n        _burn(tokenId);\n    }\n}\n",
-  "sourcePath": "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol",
+  "sourcePath": "@openzeppelin\\contracts\\token\\ERC721\\extensions\\ERC721Burnable.sol",
   "ast": {
     "absolutePath": "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol",
     "exportedSymbols": {
       "Address": [
-        2067
+        1698
       ],
       "Context": [
-        2089
+        1720
       ],
       "ERC165": [
-        2413
+        2044
       ],
       "ERC721": [
         1087
@@ -374,19 +374,19 @@
         1251
       ],
       "IERC165": [
-        2425
+        2056
       ],
       "IERC721": [
         1203
       ],
       "IERC721Metadata": [
-        1772
+        1403
       ],
       "IERC721Receiver": [
         1221
       ],
       "Strings": [
-        2389
+        2020
       ]
     },
     "id": 1252,
@@ -423,7 +423,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 1252,
-        "sourceUnit": 2090,
+        "sourceUnit": 1721,
         "src": "175:36:5",
         "symbolAliases": [],
         "unitAlias": ""
@@ -439,7 +439,7 @@
                 "342:7:5"
               ],
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 2089,
+              "referencedDeclaration": 1720,
               "src": "342:7:5"
             },
             "id": 1228,
@@ -476,11 +476,11 @@
         "linearizedBaseContracts": [
           1251,
           1087,
-          1772,
+          1403,
           1203,
-          2413,
-          2425,
-          2089
+          2044,
+          2056,
+          1720
         ],
         "name": "ERC721Burnable",
         "nameLocation": "324:14:5",
@@ -505,7 +505,7 @@
                               "name": "_msgSender",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 2079,
+                              "referencedDeclaration": 1710,
                               "src": "666:10:5",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_function_internal_view$__$returns$_t_address_$",
@@ -771,7 +771,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.9",
-  "updatedAt": "2022-08-23T13:34:45.121Z",
+  "updatedAt": "2022-08-24T13:52:20.869Z",
   "devdoc": {
     "details": "ERC721 Token that can be burned (destroyed).",
     "kind": "dev",
