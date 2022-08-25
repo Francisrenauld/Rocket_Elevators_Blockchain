@@ -116,7 +116,7 @@ contract RocketToken is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Ow
         return address(this).balance;
     }
 
-        function withdrawMoney() public onlyOwner{
+    function withdrawMoney() public onlyOwner{
         address payable to = payable(msg.sender);
         to.transfer(getBalance());
     }
