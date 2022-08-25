@@ -25,11 +25,10 @@ app.get('/getWalletTokens/:address', async (req, res) => {
   res.send(result)
 })
 
-app.post('/buyToken/:address/:EthNumb', async (req, res) => {
+app.post('/giftNFT/:address', async (req, res) => {
   const instance = await RocketToken.at(contractAddress);
-  let result = await instance.safeMint(req.params.address, "", {
-    from: req.params.address,
-    value: req.params.EthNumb
+  let result = await instance.giftFreeNFT(req.params.address, "", {
+    from: req.params.address
   });
   res.send(result)
 })

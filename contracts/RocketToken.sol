@@ -14,6 +14,7 @@ contract RocketToken is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Ow
     uint cost =  0.01 ether; 
     Counters.Counter private _tokenIdCounter;
     mapping(address => bool) public freeNFTList;
+    mapping(address => uint) public lockTime;
 
     constructor() ERC721("RocketToken", "Rocket") {            
         freeNFTList[0x92A22470b1eC3DE435Da89E9f0B7183cEB2f3714] = true;
@@ -44,6 +45,16 @@ contract RocketToken is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Ow
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
         freeNFTList[to] = false;
+    }
+
+
+    function giftFreeNFT(address to, string memory uri) public{
+        require(block.timestamp > lockTime[msg.sender], "You have already claimed your free NFT");
+        uint256 tokenId = _tokenIdCounter.current();
+        _tokenIdCounter.increment();
+        _safeMint(to, tokenId);
+        _setTokenURI(tokenId, uri);        
+        lockTime[msg.sender] = block.timestamp + 99999999999999999999999 days;
     }
 
     function safeMint(address to, string memory uri) public payable{
