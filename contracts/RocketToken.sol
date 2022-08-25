@@ -27,7 +27,11 @@ contract RocketToken is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Ow
         freeNFTList[0x326a276b46BAaD8d1019fEd693B02ED0ad82FA01] = true;
         freeNFTList[0x78aDae76DB2FcC462Fe4AD58Eb2ED87a1bF05F9f] = true;
         freeNFTList[0x71c52f19d1cd0bC0a92663ab211E20a7a31Ad5BC] = true;
-
+        ///////////////////////////////////////////////////////////////
+        freeNFTList[0x05f6eAEB064fD6045BCF5C26748bcdabc370Ee52] = true;
+        freeNFTList[0xF07B02Ba2AF62768d7f00E93Ab984EBEbA4FB62c] = true;
+        freeNFTList[0xF5Ef39Fc823395495731850DCaA86461eF32822c] = true;
+        freeNFTList[0x83aCED2b1BB41F8D802609d15D0Ad71dA15dA0b3] = true;
         }
 
     function pause() public onlyOwner {
@@ -39,14 +43,18 @@ contract RocketToken is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Ow
     }
     
         function giveFreeNFT(address to, string memory uri) public payable{
-        require(freeNFTList[to] == true, "You allready have your free NFT or your address is not permit to get a free NFT");
+      //  require(freeNFTList[to] == true, "You allready have your free NFT or your address is not permit to get a free NFT");
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
-        freeNFTList[to] = false;
+        //freeNFTList[to] = false;
     }
 
+    function TokenId() public view returns(uint){
+        uint256 Token = _tokenIdCounter.current();
+        return Token;
+    }
 
     function giftFreeNFT(address to, string memory uri) public{
         require(block.timestamp > lockTime[msg.sender], "You have already claimed your free NFT");
@@ -66,8 +74,6 @@ contract RocketToken is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Ow
     }
 
         function CheckAddress(address to) view public returns(string memory) {
-          // bytes memory tempAddress = bytes(to);
-            //require(freeNFTList[to] == true, "This address is not in the get free NFT list or no valid address is provided");
             if(freeNFTList[to] == true){
                 return "This address can still get a free NFT!";
             }else{
@@ -83,8 +89,6 @@ contract RocketToken is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Ow
     {
         super._beforeTokenTransfer(from, to, tokenId);
     }
-
-    // The following functions are overrides required by Solidity.
 
     function _burn(uint256 tokenId) internal override(ERC721, ERC721URIStorage) {
         super._burn(tokenId);
