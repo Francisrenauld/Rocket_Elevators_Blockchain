@@ -70,18 +70,22 @@ app.get('/', (req, res) => {
 })
 
 app.get('/getWalletTokens/:address', async (req, res) => {
-  const instance = await RocketToken.at(contractAddress);
-  let result = await instance.balanceOf(req.params.address);
-  let uriTbl = [];
-  for (let i = 0; i < result; i++) {
-    let token = await instance.tokenOfOwnerByIndex(req.params.address, i);
-    let uri = await instance.tokenURI(token);
-    let result = await fetch(uri)
-    let resultJson = await result.json();
-    uriTbl.push(resultJson);
+  try {
+    const instance = await RocketToken.at(contractAddress);
+    let result = await instance.balanceOf(req.params.address);
+    let uriTbl = [];
+    for (let i = 0; i < result; i++) {
+      let token = await instance.tokenOfOwnerByIndex(req.params.address, i);
+      let uri = await instance.tokenURI(token);
+      let result = await fetch(uri)
+      let resultJson = await result.json();
+      uriTbl.push(resultJson);
 
+    }
+    res.send(uriTbl)
+  } catch (err) {
+    res.send("not available")
   }
-  res.send(uriTbl)
 })
 
 const uploadToIPFS = async (file, path) => {
@@ -101,28 +105,31 @@ const uploadToIPFS = async (file, path) => {
 }
 
 app.post('/giftNFT/:address', async (req, res) => {
+  try {
+    const instance = await RocketToken.at(contractAddress);
+    let tokenId = await instance.TokenId();
+    let name = await instance.name();
+    let image = await generateImage();
+    let response1 = await uploadToIPFS(image, "RocketToken_" + tokenId + ".png")
 
-  const instance = await RocketToken.at(contractAddress);
-  let tokenId = await instance.TokenId();
-  let name = await instance.name();
-  let image = await generateImage();
-  let response1 = await uploadToIPFS(image, "RocketToken_" + tokenId + ".png")
 
+    const object = {
+      name: name + " #" + tokenId,
+      description: "RocketToken Contract",
+      image: response1
 
-  const object = {
-    name: name + " #" + tokenId,
-    description: "RocketToken Contract",
-    image: response1
+    };
 
-  };
-
-  let str = JSON.stringify(object);
-  let b64 = Buffer.from(str).toString("base64");
-  let response2 = await uploadToIPFS(b64, "RocketToken_" + tokenId + ".json");
-  let result = await instance.giveFreeNFT(req.params.address, response2, {
-    from: req.params.address
-  });
-  res.json(response2)
+    let str = JSON.stringify(object);
+    let b64 = Buffer.from(str).toString("base64");
+    let response2 = await uploadToIPFS(b64, "RocketToken_" + tokenId + ".json");
+    let result = await instance.giveFreeNFT(req.params.address, response2, {
+      from: req.params.address
+    });
+    res.json(response2)
+  } catch (err) {
+    res.send("not available")
+  }
 })
 
 app.get('/getMetadata/:tokenId', async (req, res) => {
@@ -142,9 +149,13 @@ app.get('/getContractName', async (req, res) => {
 })
 
 app.get('/checkEligibleAddress/:address', async (req, res) => {
-  const instance = await RocketToken.at(contractAddress);
-  let check = await instance.CheckAddress(req.params.address);
-  res.send(check)
+  try {
+    const instance = await RocketToken.at(contractAddress);
+    let check = await instance.CheckAddress(req.params.address);
+    res.send(check)
+  } catch (err) {
+    res.send("not available")
+  }
 })
 
 app.listen(process.env.PORT || 3000, port, () => {
