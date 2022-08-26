@@ -143,6 +143,6 @@ app.get('/checkEligibleAddress/:address', async (req, res) => {
   res.send(check)
 })
 
-app.listen(port, () => {
+app.listen(process.env.PORT || 5000, port, () => {
   console.log(`Example app listening on port ${port}`);
 });
