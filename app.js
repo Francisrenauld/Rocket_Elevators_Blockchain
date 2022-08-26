@@ -3,8 +3,54 @@ const app = express()
 const axios = require('axios');
 const port = 3000
 const Web3 = require('web3');
-const provider = new Web3.providers.HttpProvider("http://localhost:8545");
+const provider = new Web3.providers.HttpProvider("http://blockchain.codeboxxtest.xyz");
 const contract = require("@truffle/contract");
+
+const mergeImages = require("merge-images");
+const {
+  Canvas,
+  Image
+} = require("canvas");
+let backgroundArray = new Array("images/background/1.png");
+let earsArray = new Array("images/ears/1.png", "images/ears/2.png", "images/ears/3.png", "images/ears/4.png");
+let eyesArray = new Array("images/eyes/1.png", "images/eyes/2.png", "images/eyes/3.png", "images/eyes/4.png");
+let headArray = new Array("images/head/1.png", "images/head/2.png", "images/head/3.png");
+let mouthArray = new Array("images/mouth/1.png", "images/mouth/2.png", "images/mouth/3.png", "images/mouth/4.png");
+let mustacheArray = new Array("images/mustache/1.png", "images/mustache/2.png", "images/mustache/3.png", "images/mustache/4.png");
+let noseArray = new Array("images/nose/1.png", "images/nose/2.png", "images/nose/3.png", "images/nose/4.png");
+let pupilArray = new Array("images/pupil/1.png", "images/pupil/2.png", "images/pupil/3.png", "images/pupil/4.png");
+const generateImage = async () => {
+  //generate a random backgroud
+  var randomNum = Math.floor(Math.random() * backgroundArray.length);
+  randomBackground = backgroundArray[randomNum];
+  //generate random ears
+  var randomNum = Math.floor(Math.random() * earsArray.length);
+  randomEars = earsArray[randomNum];
+  //generate random eyes
+  var randomNum = Math.floor(Math.random() * eyesArray.length);
+  randomEyes = eyesArray[randomNum];
+  //generate random head
+  var randomNum = Math.floor(Math.random() * headArray.length);
+  randomHead = headArray[randomNum];
+  //generate random mouth
+  var randomNum = Math.floor(Math.random() * mouthArray.length);
+  randomMouth = mouthArray[randomNum];
+  //generate random mustache
+  var randomNum = Math.floor(Math.random() * mustacheArray.length);
+  randomMustache = mustacheArray[randomNum];
+  //generate random nose
+  var randomNum = Math.floor(Math.random() * noseArray.length);
+  randomNose = noseArray[randomNum];
+  //generate random pupil
+  var randomNum = Math.floor(Math.random() * pupilArray.length);
+  randomPupil = pupilArray[randomNum];
+  let b64 = await mergeImages([randomBackground, randomHead, randomEars, randomEyes, randomMouth, randomMustache, randomNose, randomPupil], {
+    Canvas: Canvas,
+    Image: Image,
+  });
+  console.log(b64);
+};
+
 // Require the package that was previosly saved by @truffle/artifactor
 const RocketTokenArtifact = require("./build/contracts/RocketToken.json");
 const {
@@ -16,7 +62,7 @@ const RocketToken = contract(RocketTokenArtifact);
 RocketToken.setProvider(provider);
 
 // Note our MetaCoin contract exists at a specific address.
-const contractAddress = "0xD7084D69cBd08B5cc7718C98f48561E0f278b270";
+const contractAddress = "0x34a08B6f890fD72142038ca29dfA9Bb3362348d4";
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
@@ -42,26 +88,35 @@ const uploadToIPFS = async (file, path) => {
     }]
   });
   console.log(response.data)
-  return response.data;
+  return response.data[0].path;
 }
 
 app.post('/giftNFT/:address', async (req, res) => {
+  // var image = new Image();
+
+  // image.src = generateImage();
+
+  // document.body.appendChild(image);
+
   const instance = await RocketToken.at(contractAddress);
   let tokenId = await instance.TokenId();
   let name = await instance.name();
+  let response1 = await uploadToIPFS(generateImage(), "RocketToken_" + tokenId + ".png")
   let result = await instance.giveFreeNFT(req.params.address, "", {
     from: req.params.address
   });
+
   const object = {
     name: name + " #" + tokenId,
     description: "RocketToken Contract",
-    image: "http"
+    image: response1
 
   };
+
   let str = JSON.stringify(object);
   let b64 = Buffer.from(str).toString("base64");
-  let response = await uploadToIPFS(b64, object.image);
-  res.json(response)
+  let response2 = await uploadToIPFS(b64, "RocketToken_" + tokenId + ".json");
+  res.json(response2)
 })
 
 app.get('/getMetadata/:tokenId', async (req, res) => {

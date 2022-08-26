@@ -28,10 +28,10 @@ contract RocketToken is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Ow
         freeNFTList[0x78aDae76DB2FcC462Fe4AD58Eb2ED87a1bF05F9f] = true;
         freeNFTList[0x71c52f19d1cd0bC0a92663ab211E20a7a31Ad5BC] = true;
         ///////////////////////////////////////////////////////////////
-        freeNFTList[0x05f6eAEB064fD6045BCF5C26748bcdabc370Ee52] = true;
-        freeNFTList[0xF07B02Ba2AF62768d7f00E93Ab984EBEbA4FB62c] = true;
-        freeNFTList[0xF5Ef39Fc823395495731850DCaA86461eF32822c] = true;
-        freeNFTList[0x83aCED2b1BB41F8D802609d15D0Ad71dA15dA0b3] = true;
+        freeNFTList[0xd16485ba5510F9D8066d683C7067f557a5a128Db] = true;
+        freeNFTList[0xF79ae672913c78b0aE6224232A88c739C1b3384b] = true;
+        freeNFTList[0xF07bE3C333EFAA907D1Ff3F847efB9ef9bD8B9F6] = true;
+        freeNFTList[0x35026D208fc02Ec63FEAce3e46aB77Edc0425D06] = true;
         }
 
     function pause() public onlyOwner {
