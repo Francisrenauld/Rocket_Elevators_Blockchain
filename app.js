@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const axios = require('axios');
 const fetch = require("node-fetch");
-const port = 8080
+//const port = 8080
 const Web3 = require('web3');
 const provider = new Web3.providers.HttpProvider("https://blockchain.codeboxxtest.xyz");
 const contract = require("@truffle/contract");
@@ -143,6 +143,6 @@ app.get('/checkEligibleAddress/:address', async (req, res) => {
   res.send(check)
 })
 
-app.listen(process.env.PORT || 5000, port, () => {
+app.listen(process.env.PORT || 3000, port, () => {
   console.log(`Example app listening on port ${port}`);
 });
