@@ -3,15 +3,12 @@
   "version": "1.0.0",
   "description": "Rocket Elevators Blockchain Solution",
   "main": "app.js",
-  "engines": {
-    "node": "12.11.1"
-    },
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "start": "node index.js"
- },
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/StevenFV/Rocket_Elevators_Blockchain.git"
