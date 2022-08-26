@@ -2,7 +2,7 @@
   "name": "rocket_elevators_blockchain",
   "version": "1.0.0",
   "description": "Rocket Elevators Blockchain Solution",
-  "main": "truffle-config.js",
+  "main": "app.js",
   "directories": {
     "test": "test"
   },

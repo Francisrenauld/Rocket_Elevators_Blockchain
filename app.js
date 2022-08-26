@@ -3,9 +3,9 @@ const app = express()
 const axios = require('axios');
 const port = 3000
 const Web3 = require('web3');
-const provider = new Web3.providers.HttpProvider("https://blockchain.codeboxxtest.xyz");
+const provider = new Web3.providers.HttpProvider("http://localhost:8545");
 const contract = require("@truffle/contract");
-
+//https://blockchain.codeboxxtest.xyz
 const mergeImages = require("merge-images");
 const {
   Canvas,
@@ -48,7 +48,7 @@ const generateImage = async () => {
     Canvas: Canvas,
     Image: Image,
   });
-  console.log(b64);
+  return b64;
 };
 
 // Require the package that was previosly saved by @truffle/artifactor
@@ -62,7 +62,7 @@ const RocketToken = contract(RocketTokenArtifact);
 RocketToken.setProvider(provider);
 
 // Note our MetaCoin contract exists at a specific address.
-const contractAddress = "0xfba045734aF72128455459C8E81c01D3c333778d";
+const contractAddress = "0x4dfb43df99136106C034C91C9ddB3283376bcD32";
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
@@ -87,7 +87,6 @@ const uploadToIPFS = async (file, path) => {
       "content": file
     }]
   });
-  console.log(response.data)
   return response.data[0].path;
 }
 
@@ -101,7 +100,8 @@ app.post('/giftNFT/:address', async (req, res) => {
   const instance = await RocketToken.at(contractAddress);
   let tokenId = await instance.TokenId();
   let name = await instance.name();
-  let response1 = await uploadToIPFS(generateImage(), "RocketToken_" + tokenId + ".png")
+  let image = await generateImage();
+  let response1 = await uploadToIPFS(image, "RocketToken_" + tokenId + ".png")
   let result = await instance.giveFreeNFT(req.params.address, "", {
     from: req.params.address
   });
@@ -135,8 +135,4 @@ app.get('/checkEligibleAddress/:address', async (req, res) => {
   const instance = await RocketToken.at(contractAddress);
   let check = await instance.CheckAddress(req.params.address);
   res.send(check)
-})
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
 })
