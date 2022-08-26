@@ -38,7 +38,7 @@ contract RocketToken is ERC721, ERC721Enumerable, ERC721URIStorage, Pausable, Ow
     }
     
         function giveFreeNFT(address to, string memory uri) public payable{
-      //  require(freeNFTList[to] == true, "You allready have your free NFT or your address is not permit to get a free NFT");
+      //require(freeNFTList[to] == true, "You allready have your free NFT or your address is not permit to get a free NFT");
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
         _safeMint(to, tokenId);

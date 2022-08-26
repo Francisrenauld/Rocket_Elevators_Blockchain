@@ -4,9 +4,11 @@ const axios = require('axios');
 const fetch = require("node-fetch");
 const port = 8080
 const Web3 = require('web3');
-const provider = new Web3.providers.HttpProvider("https://blockchain.codeboxxtest.xyz");
+//const provider = new Web3.providers.HttpProvider("https://blockchain.codeboxxtest.xyz");
 const contract = require("@truffle/contract");
-
+var HDWalletProvider = require("truffle-hdwallet-provider");
+var mnemonic = "clap timber ranch solid toast wolf require glide cost inside giraffe negative"; // 12 word mnemonic
+var provider = new Web3(new HDWalletProvider(mnemonic, "http://blockchain.codeboxxtest.xyz"));
 // Require the package that was previosly saved by @truffle/artifactor
 const RocketTokenArtifact = require("./build/contracts/RocketToken.json");
 const {
