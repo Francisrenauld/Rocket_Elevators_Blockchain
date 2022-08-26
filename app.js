@@ -126,9 +126,13 @@ app.post('/giftNFT/:address', async (req, res) => {
 })
 
 app.get('/getMetadata/:tokenId', async (req, res) => {
-  const instance = await RocketToken.at(contractAddress);
-  let result = await instance.tokenURI(req.params.tokenId);
-  res.send(result)
+  try {
+    const instance = await RocketToken.at(contractAddress);
+    let result = await instance.tokenURI(req.params.tokenId);
+    res.send(result)
+  } catch (err) {
+    res.send("not available")
+  }
 })
 
 app.get('/getContractName', async (req, res) => {
