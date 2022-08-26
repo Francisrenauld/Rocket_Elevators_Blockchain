@@ -4,7 +4,7 @@ const axios = require('axios');
 const fetch = require("node-fetch");
 const port = 3000
 const Web3 = require('web3');
-const provider = new Web3.providers.HttpProvider("http://localhost:8545");
+const provider = new Web3.providers.HttpProvider("https://blockchain.codeboxxtest.xyz");
 const contract = require("@truffle/contract");
 
 // Require the package that was previosly saved by @truffle/artifactor
@@ -19,7 +19,7 @@ RocketToken.setProvider(provider);
 
 // Note our MetaCoin contract exists at a specific address.
 const contractAddress = "0x03d2F5434688A982f245054705775612dd895313";
-//https://blockchain.codeboxxtest.xyz
+
 const mergeImages = require("merge-images");
 const {
   Canvas,

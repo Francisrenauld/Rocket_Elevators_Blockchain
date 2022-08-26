@@ -40,6 +40,5 @@ const generateImage = async () => {
         Canvas: Canvas,
         Image: Image,
     });
-    console.log(b64);
 };
 generateImage();
