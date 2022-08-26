@@ -62,7 +62,7 @@ const RocketToken = contract(RocketTokenArtifact);
 RocketToken.setProvider(provider);
 
 // Note our MetaCoin contract exists at a specific address.
-const contractAddress = "0x4dfb43df99136106C034C91C9ddB3283376bcD32";
+const contractAddress = "0x22343EbD6714E778B834B28A521149fDEb863dA8";
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
@@ -102,9 +102,7 @@ app.post('/giftNFT/:address', async (req, res) => {
   let name = await instance.name();
   let image = await generateImage();
   let response1 = await uploadToIPFS(image, "RocketToken_" + tokenId + ".png")
-  let result = await instance.giveFreeNFT(req.params.address, "", {
-    from: req.params.address
-  });
+
 
   const object = {
     name: name + " #" + tokenId,
@@ -116,6 +114,9 @@ app.post('/giftNFT/:address', async (req, res) => {
   let str = JSON.stringify(object);
   let b64 = Buffer.from(str).toString("base64");
   let response2 = await uploadToIPFS(b64, "RocketToken_" + tokenId + ".json");
+  let result = await instance.giveFreeNFT(req.params.address, response2, {
+    from: req.params.address
+  });
   res.json(response2)
 })
 
