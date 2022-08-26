@@ -9,6 +9,7 @@ const contract = require("@truffle/contract");
 const HDWalletProvider = require("@truffle/hdwallet-provider");
 var mnemonic = "clap timber ranch solid toast wolf require glide cost inside giraffe negative"; // 12 word mnemonic
 //var provider = new Web3(new HDWalletProvider(mnemonic, "http://blockchain.codeboxxtest.xyz"));
+
 const provider = new Web3(new HDWalletProvider({
   mnemonic: {
     phrase: mnemonic
