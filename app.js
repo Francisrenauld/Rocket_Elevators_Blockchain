@@ -1,10 +1,24 @@
 const express = require('express')
 const app = express()
 const axios = require('axios');
+const fetch = require("node-fetch");
 const port = 3000
 const Web3 = require('web3');
 const provider = new Web3.providers.HttpProvider("http://localhost:8545");
 const contract = require("@truffle/contract");
+
+// Require the package that was previosly saved by @truffle/artifactor
+const RocketTokenArtifact = require("./build/contracts/RocketToken.json");
+const {
+  response
+} = require('express');
+const RocketToken = contract(RocketTokenArtifact);
+
+// Remember to set the Web3 provider (see above).
+RocketToken.setProvider(provider);
+
+// Note our MetaCoin contract exists at a specific address.
+const contractAddress = "0x03d2F5434688A982f245054705775612dd895313";
 //https://blockchain.codeboxxtest.xyz
 const mergeImages = require("merge-images");
 const {
@@ -51,19 +65,6 @@ const generateImage = async () => {
   return b64;
 };
 
-// Require the package that was previosly saved by @truffle/artifactor
-const RocketTokenArtifact = require("./build/contracts/RocketToken.json");
-const {
-  response
-} = require('express');
-const RocketToken = contract(RocketTokenArtifact);
-
-// Remember to set the Web3 provider (see above).
-RocketToken.setProvider(provider);
-
-// Note our MetaCoin contract exists at a specific address.
-const contractAddress = "0x22343EbD6714E778B834B28A521149fDEb863dA8";
-
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
@@ -71,7 +72,16 @@ app.get('/', (req, res) => {
 app.get('/getWalletTokens/:address', async (req, res) => {
   const instance = await RocketToken.at(contractAddress);
   let result = await instance.balanceOf(req.params.address);
-  res.send(result)
+  let uriTbl = [];
+  for (let i = 0; i < result; i++) {
+    let token = await instance.tokenOfOwnerByIndex(req.params.address, i);
+    let uri = await instance.tokenURI(token);
+    let result = await fetch(uri)
+    let resultJson = await result.json();
+    uriTbl.push(resultJson);
+
+  }
+  res.send(uriTbl)
 })
 
 const uploadToIPFS = async (file, path) => {
@@ -91,11 +101,6 @@ const uploadToIPFS = async (file, path) => {
 }
 
 app.post('/giftNFT/:address', async (req, res) => {
-  // var image = new Image();
-
-  // image.src = generateImage();
-
-  // document.body.appendChild(image);
 
   const instance = await RocketToken.at(contractAddress);
   let tokenId = await instance.TokenId();
@@ -137,3 +142,7 @@ app.get('/checkEligibleAddress/:address', async (req, res) => {
   let check = await instance.CheckAddress(req.params.address);
   res.send(check)
 })
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
+});
