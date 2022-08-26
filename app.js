@@ -3,7 +3,7 @@ const app = express()
 const axios = require('axios');
 const port = 3000
 const Web3 = require('web3');
-const provider = new Web3.providers.HttpProvider("http://blockchain.codeboxxtest.xyz");
+const provider = new Web3.providers.HttpProvider("https://blockchain.codeboxxtest.xyz");
 const contract = require("@truffle/contract");
 
 const mergeImages = require("merge-images");
@@ -62,7 +62,7 @@ const RocketToken = contract(RocketTokenArtifact);
 RocketToken.setProvider(provider);
 
 // Note our MetaCoin contract exists at a specific address.
-const contractAddress = "0x34a08B6f890fD72142038ca29dfA9Bb3362348d4";
+const contractAddress = "0xfba045734aF72128455459C8E81c01D3c333778d";
 
 app.get('/', (req, res) => {
   res.send('Hello World!')

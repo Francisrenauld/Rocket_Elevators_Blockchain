@@ -86,9 +86,9 @@ module.exports = {
     // Useful for deploying to a public network.
     // Note: It's important to wrap the provider as a function to ensure truffle uses a new provider every time.
     codeboxx: {
-      provider: () => new HDWalletProvider(MNEMONIC, `http://blockchain.codeboxxtest.xyz`),
-      network_id: 1337, // Goerli's id
-      confirmations: 2, // # of confirmations to wait between deployments. (default: 0)
+      provider: () => new HDWalletProvider(MNEMONIC, `https://blockchain.codeboxxtest.xyz`),
+      network_id: "*", // Goerli's id
+      // confirmations: 2, // # of confirmations to wait between deployments. (default: 0)
       timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
       skipDryRun: true // Skip dry run before migrations? (default: false for public nets )
     },
