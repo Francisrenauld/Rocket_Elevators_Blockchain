@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Rocket Elevators Blockchain Solution",
   "main": "app.js",
+  "engines": {
+    "node": "12.11.1"
+    },
   "directories": {
     "test": "test"
   },
