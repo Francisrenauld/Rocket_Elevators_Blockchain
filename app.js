@@ -18,7 +18,7 @@ const RocketToken = contract(RocketTokenArtifact);
 RocketToken.setProvider(provider);
 
 // Note our MetaCoin contract exists at a specific address.
-const contractAddress = "0x6bEF6faBf2A57e102557Fba0746B1302035fDbA7";
+const contractAddress = "0x403684812a1666Cd70F448f044142c1AefbF8bb2";
 
 const mergeImages = require("merge-images");
 const {
