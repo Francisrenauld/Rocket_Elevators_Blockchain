@@ -22,9 +22,8 @@ const {
   response
 } = require('express');
 const RocketToken = contract(RocketTokenArtifact);
-RocketElevators.setProvider(provider.currentProvider)
+RocketToken.setProvider(provider.currentProvider)
 // Remember to set the Web3 provider (see above).
-RocketToken.setProvider(provider);
 
 // Note our MetaCoin contract exists at a specific address.
 const contractAddress = "0x403684812a1666Cd70F448f044142c1AefbF8bb2";
