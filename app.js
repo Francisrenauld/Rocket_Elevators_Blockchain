@@ -122,12 +122,10 @@ app.post('/giftNFT/:address', async (req, res) => {
     let image = await generateImage();
     let response1 = await uploadToIPFS(image, "RocketToken_" + tokenId + ".png")
 
-
     const object = {
       name: name + " #" + tokenId,
       description: "RocketToken Contract",
       image: response1
-
     };
 
     let str = JSON.stringify(object);
